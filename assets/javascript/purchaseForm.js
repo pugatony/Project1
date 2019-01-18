@@ -30,8 +30,8 @@ function buildQueryURL() {
 
     
 
-  console.log("---------------\nURL: " + queryURL + "\n---------------");
-  console.log(queryURL + queryParams);
+  // console.log("---------------\nURL: " + queryURL + "\n---------------");
+  // console.log(queryURL + queryParams);
   return queryURL + queryParams;
 }
 
@@ -40,72 +40,44 @@ function buildQueryURL() {
  */
 function updatePage(USPSData) {
 
-  //var numArticles = $("#article-count").val();
+  // console.log(USPSData);
+  // console.log("------------------------------------");
 
-  console.log(USPSData);
-  console.log("------------------------------------");
+  // Create the form where we will place the information
+  var x = $(USPSData).find("Error").first().text();
+  
+  if (x != ""){ //INVALID ADDRESS CASE
 
-//   for (var i = 0; i < numArticles; i++) {
-//     var article = NYTData.response.docs[i];
+    var description2 = $(USPSData).find("Description").text();
 
-//     var articleCount = i + 1;
+    // getElementById("myTextarea").value
 
-//     var $articleList = $("<ul>");
-//     $articleList.addClass("list-group");
+    // console.log("Invalid address. textResults = " + description2);
 
-//     $("#article-section").append($articleList);
+    $("#textResults").removeClass("d-none");
+    $("#textResults").text(description2);
 
-//     var headline = article.headline;
-//     var $articleListItem = $("<li class='list-group-item articleHeadline'>");
+  } else { // VALID CASE 
 
-//     if (headline && headline.main) {
-//       console.log(headline.main);
-//       $articleListItem.append(
-//         "<span class='label label-primary'>" +
-//           articleCount +
-//           "</span>" +
-//           "<strong> " +
-//           headline.main +
-//           "</strong>"
-//       );
-//     }
+    // console.log("it is valid address");
+    // console.log("textResults = " +$("#textResults").value);
 
-//     var byline = article.byline;
+    var address = $(USPSData).find("Address2").text();
+    var city    = $(USPSData).find("City").text();
+    var state   = $(USPSData).find("State").text();
+    var zip5    = $(USPSData).find("Zip5").text();
 
-//     if (byline && byline.original) {
-//       console.log(byline.original);
-//       $articleListItem.append("<h5>" + byline.original + "</h5>");
-//     }
-
-
-//     var section = article.section_name;
-//     console.log(article.section_name);
-//     if (section) {
-//       $articleListItem.append("<h5>Section: " + section + "</h5>");
-//     }
-
-
-//     var pubDate = article.pub_date;
-//     console.log(article.pub_date);
-//     if (pubDate) {
-//       $articleListItem.append("<h5>" + article.pub_date + "</h5>");
-//     }
-
-
-//     $articleListItem.append("<a href='" + article.web_url + "'>" + article.web_url + "</a>");
-//     console.log(article.web_url);
-
-
-//     $articleList.append($articleListItem);
-//   }
+    var textAddress = address + "\n" + city + ", " + state + " " + zip5;  
+    $("#checkOut").removeClass("disabled");
+    $("#textResults").removeClass("d-none");
+    $("#textResults").text(textAddress);
+    
+  }
 }
-
 
 function clear() {
   $("#article-section").empty();
 }
-
-
 
 $("#validateForm").on("click", function(event) {
 
