@@ -1,3 +1,4 @@
+
 /**
  * @returns {string}
  */
@@ -68,7 +69,7 @@ function updatePage(USPSData) {
     var zip5    = $(USPSData).find("Zip5").text();
 
     var textAddress = address + "\n" + city + ", " + state + " " + zip5;  
-    $("#checkOut").removeClass("disabled");
+    $("#paypal-button").removeClass("disabled");
     $("#textResults").removeClass("d-none");
     $("#textResults").text(textAddress);
     
@@ -86,8 +87,6 @@ $("#validateForm").on("click", function(event) {
   clear();
 
   var queryURL = buildQueryURL();
-
-
    $.ajax({
      url: queryURL,
      dataType: "xml",
@@ -96,3 +95,83 @@ $("#validateForm").on("click", function(event) {
 });
 
 $("#clearAll").on("click", clear);
+
+/* -------------------------------------
+      Pay Pal Section 
+  -------------------------------------- */
+
+  paypal.Button.render({
+    // Configure environment
+    env: 'sandbox',
+    client: {
+        sandbox: 'AaR9zkIpcElBxxKso4qONsu74_ZC8FOXRx_o9J0sxhes8SQVzkVBbGm4kUkw0CcOUzXE6MK2dZgaeg5A',
+        production: 'demo_production_client_id'
+    },
+    // Customize button (optional)
+    locale: 'en_US',
+    style: {
+        size: 'small',
+        color: 'gold',
+        shape: 'pill',
+    },
+
+    // Enable Pay Now checkout flow (optional)
+    commit: true,
+
+// Set up a payment
+payment: function(data, actions) {
+  return actions.payment.create({
+    transactions: [{
+      amount: {
+        total: '10.00',
+        currency: 'USD'
+      },
+      description: 'Code: F001. Fiesta Blue Skirt',
+      
+      item_list: {
+        items: [
+        {
+          name: 'F001',
+          description: 'Fiesta Blue Skirt',
+          quantity: '1',
+          price: '10.00',
+          currency: 'USD'
+        }],
+        shipping_address: {
+          // recipient_name:  $("#firstName").val().trim(),
+          recipient_name:  $('#firstName').val().trim(),
+          line1: '4th Floor',
+          line2: 'Unit #34',
+          city: 'San Jose',
+          country_code: 'US',
+          postal_code: '95131',
+          state: 'CA'
+        }
+      }
+    }],
+    note_to_payer: 'Contact us for any questions on your order.'
+  });
+},
+// shipping_address: {
+//   recipient_name: 'Brian Robinson',
+//   line1: '4th Floor',
+//   line2: 'Unit #34',
+//   city: 'San Jose',
+//   country_code: 'US',
+//   postal_code: '95131',
+//   phone: '011862212345678',
+//   state: 'CA'
+//   }
+
+
+
+    // Execute the payment
+    onAuthorize: function(data, actions) {
+        return actions.payment.execute().then(function() {
+            // Show a confirmation message to the buyer
+            //window.alert('Thank you for your purchase!');
+            window.location="thankYou.html";
+        });
+        
+    }
+}, '#paypal-button');   
