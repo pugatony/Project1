@@ -14,4 +14,8 @@ function displayImage() {
 
 setInterval(displayImage, 6000);
 
+ german2.0
 displayImage();
+
+displayImage();
+

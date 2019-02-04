@@ -2,6 +2,33 @@
 <html lang="en">
 
 <head>
+ german2.0
+  <meta charset="UTF-8">
+  <title>MLPD - Purchase Form</title>
+  <!-- Bootstrap CSS CDN  -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0/css/bootstrap.min.css" />
+
+  <!-- Font Awesome CSS Icons (For cool glyphicons) -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css" />
+
+  <!-- Load the required checkout.js script --> 
+  <script src="https://www.paypalobjects.com/api/checkout.js" data-version-4></script> 
+
+  <!-- Load the required Braintree components. -->
+  <script src="https://js.braintreegateway.com/web/3.39.0/js/client.min.js"></script>
+  <script src="https://js.braintreegateway.com/web/3.39.0/js/paypal-checkout.min.js"></script>
+
+  <!-- Style to fix the issue of text extending past card length -->
+  <style>
+    .card-body a {
+      word-break: break-all;
+    }
+
+    .articleHeadline {
+      line-height: 1.5;
+    }
+  </style>
+
     <meta charset="UTF-8">
     <title>MLPD - Purchase Form</title>
     <!-- Bootstrap CSS CDN  -->
@@ -20,6 +47,7 @@
             line-height: 1.5;
         }
     </style>
+
 </head>
 
 <body>
@@ -54,6 +82,93 @@
         <strong>
           <i class="fa fa-newspaper-o"></i> My Little Princess Dress. Purchase form</strong>
       </h1>
+ german2.0
+    </div> --> 
+
+    <div class="py-5 text-center">
+        <h1>My Little Princess Dress</h1>
+        <h2>Purchase form</h2>
+        <p class="lead"> Thank you for buying with us.</p>
+    </div>
+
+    <!-- Row for introducing the form information -->
+    <div class="row">
+      <div class="col-sm-12">
+        <br>
+        <hr class="mb-4"> 
+        <!-- FIRST - PRODUCT INFORMATION COMING FROM PRODUCT.HTML -->
+        <div class="form-group" id="productInformation"> 
+            <!-- Validation results will be listed here -->
+            <!-- <text class="form-control d-none" id="textBox"><textarea class="form-control" id="textResults" disabled> </textarea> -->
+            <textarea class="form-control" id="textResultsProduct" disabled> Dress Code: F001. Description: Fiesta Blue Skirt. Quantity: 1. Price: $10.00 </textarea>
+        </div>
+        <hr class="mb-4">
+
+        <!--  PERSONAL INFORMATION SECTION -->
+        <div class="col-md-8 order-md-1">
+            <h4 class="mb-3">Billing Address</h4>
+          <form class="needs-validation" novalidate>
+              <div class="row">
+                  <!-- First Name -->
+                  <div class="col-md-6 mb-3"> 
+                      <label for="firstName"> First name</label>
+                      <input type="text" class="form-control" id="firstName" placeholder value required>
+                      <div class="invalid-feedback">
+                          Valid first name is required. 
+                      </div>
+                  </div>
+                  <!-- Last Name -->
+                  <div class="col-md-6 mb-3">
+                      <label for="lastName">Last Name</label>
+                      <input type="text" class="form-control" id="lastName" placeholder value required>
+                      <div class="invalid-feedback">
+                          Valid last name is required.
+                      </div>
+                  </div>
+              </div> <!-- div row -->
+              <!-- User Name -->
+              <div class="mb-3">
+                  <label for="username">E-mail</label>
+                  <div class="input-group">
+                      <div class="input-group-prepend">
+                          <span class="input-group-text">@</span>
+                      </div>
+                      <input type="text" class="form-control" id="username" placeholder="E-mail" required>
+                      <div class="invalid-feedback" style="width: 100%;">
+                            Your e-mail is required.
+                       </div>
+                  </div>
+              </div>
+              <!-- Address -->
+              <div class="mb-3">
+                  <label for="address">Address</label>
+                  <input type="text" class="form-control" id="address" placeholder="1234 Main St" required>
+                  <div class="invalid-feedback">
+                      Please enter your shipping address.
+                  </div>
+              </div>
+              <!-- Address 2 (Optional)-->
+              <div class="mb-3">
+                  <label for="address2">"Address 2"
+                      <span class="text-muted">(Optional)</span>
+                  </label>
+                  <input type="text" class="form-control" id="address2" placeholder="Apartment or suite" readonly>                  
+              </div>
+              <!-- Country, State, Zip code-->
+              <div class="row">
+                  <!-- City -->
+                  <div class="col-md-5 mb-3">
+                    <label for="city">City</label>
+                    <input type="text" class="form-control" id="city" placeholder required>
+                    <div class="invalid-feedback">
+                        city value is required. 
+                    </div>
+                  </div>
+                  <!-- State -->
+                  <div class="col-md-4 mb-3">
+                      <label for="state">State</label>
+                      <select class="custom-select d-block w-100" id="state" required>
+
     </div> -->
 
         <div class="py-5 text-center">
@@ -155,10 +270,40 @@
                             <div class="col-md-4 mb-3">
                                 <label for="state">State</label>
                                 <select class="custom-select d-block w-100" id="state" required>
+
                           <option value>Choose...</option>
                           <option>California</option>
                           <option>Georgia</option>
                       </select>
+
+                      <div class="invalid-feedback">
+                          Please provide a valid state.
+                      </div>
+                  </div>
+                  <!-- Zip Code -->
+                  <div class="col-md-3 mb-3">
+                      <label for="zip">Zip Code</label>
+                      <input type="text" class="form-control" id="zip" maxlength="5" placeholder required>
+                      <div class="invalid-feedback">
+                          Zip code required.
+                      </div>
+                  </div>
+              </div>
+              <hr class="mb-4"> 
+              <div class="form-group" id="addressValidationResults"> 
+                    <!-- Validation results will be listed here -->
+                    <!-- <text class="form-control d-none" id="textBox"><textarea class="form-control" id="textResults" disabled> </textarea> -->
+                    <textarea class="form-control d-none" id="textResults" disabled> </textarea>
+                </div>
+              <hr class="mb-4">
+              <h4 class="mb-3"> Payment </h4>
+              <div class="d-block my-3">
+                    <!-- radio buttons for payment-->
+                  <div class="custom-control custom-radio"> 
+                      <!--Paypal-->
+                      <input id="paypal" name="paymentMethod" type="radio" class="custom-control-input" checked required>
+                      <label class="custom-control-label" for="paypal">
+
                                 <div class="invalid-feedback">
                                     Please provide a valid state.
                                 </div>
@@ -193,6 +338,33 @@
                           "Paypal"
                           <!-- ::after  -->
                       </label>
+ german2.0
+                    </div>
+              </div>
+              <hr class="mb-4">
+
+              <button class="btn btn-primary btn-lg btn-block" type="submit" id="validateForm">Validate Information</button>
+              <!-- <button class="btn btn-primary btn-lg btn-block disabled" type="submit" id="checkOut">Continue to checkout</button> -->
+              <!-- <div id="paypal-button"></div> -->
+              <button class="btn btn-primary btn-lg btn-block disabled" type="submit" id="paypal-button"></button>
+              <button class="btn btn-primary btn-lg btn-block" type="submit" id="clearAll">Clear</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Footer Region -->
+    <footer class="my-5 pt-5 text-muted text-center text-small">
+        <p class="mb-1"> Copyright 2019 My Little Princess Dress</p>
+    </footer>
+    
+  </div>
+
+  <!-- jQuery JS -->
+  <script src="https://code.jquery.com/jquery.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0/js/bootstrap.bundle.min.js"></script>
+  <!-- Code to the JavaScript File -->
+  <script src="assets/javascript/purchaseForm.js"></script>
+
                             </div>
                         </div>
                         <hr class="mb-4">
@@ -223,6 +395,7 @@
         <script src="https://www.gstatic.com/firebasejs/5.7.3/firebase.js"></script>
         <!-- Code to the JavaScript File -->
         <script src="assets/javascript/purchaseForm.js"></script>
+
 
 </body>
 
