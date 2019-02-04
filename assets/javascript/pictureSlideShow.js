@@ -14,8 +14,5 @@ function displayImage() {
 
 setInterval(displayImage, 6000);
 
-
-displayImage();
-
 displayImage();
 
